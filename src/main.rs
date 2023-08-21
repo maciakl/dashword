@@ -23,7 +23,11 @@ fn main() {
 
     let len = args.length;
     let digits = args.digits;
-
+    
+    if len > 15 {
+        eprintln!("unable to generate words longer than 15 characters");
+        std::process::exit(1);
+    }
 
     let mut rng = rand::thread_rng();
 
