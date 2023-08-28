@@ -27,10 +27,29 @@ fn main() {
 
     let len = args.length;
     let digits = args.digits;
+    let simple = args.simple;
+
+    let wordtype = if simple {"simple"} else {"dictionary"};
+    
+    let dashword = match get_dashword(len, digits, simple){
+        Some(w) => w,
+        None => {
+            eprintln!("unable to generate {} words of length {}", wordtype, len);
+            std::process::exit(1);
+        }
+    };
+
+    println!("{}", dashword);
+}
+
+
+
+
+
+fn get_dashword(len:usize, digits:usize, simple:bool) -> Option<String> {
     
     if len <2 || len > 15 {
-        eprintln!("unable to generate words longer than 15 characters or shorter than 2");
-        std::process::exit(1);
+        return None;
     }
 
     let mut number = get_number(digits);
@@ -45,15 +64,19 @@ fn main() {
 
     let word:String;
 
-    if args.simple {
-        word = get_curated_word(len);
+    if simple {
+        word = match get_curated_word(len) {
+            Some(w) => w,
+            None => {
+                return None;
+            }
+        };
     }
     else {
         word = random_word::gen_len(len, random_word::Lang::En).unwrap().to_string();
     }
 
-
-    println!("{}-{}", word, number);
+    Some(format!("{}-{}", word, number))
 }
 
 
@@ -78,11 +101,10 @@ fn get_number(digits:usize) -> String {
 
 
 
-fn get_curated_word(len:usize) -> String {
+fn get_curated_word(len:usize) -> Option<String> {
 
     if len < 2 || len > 9 {
-        eprintln!("no curated words of that length");
-        std::process::exit(1);
+        return None;
     }
     let words = vec![
         // greek letters
@@ -137,6 +159,6 @@ fn get_curated_word(len:usize) -> String {
 
     let mut rng = rand::thread_rng();
     let n = rng.gen_range(0..tmp.len()-1);
-    tmp[n].to_string()
+    return Some(tmp[n].to_string());
 }
 
