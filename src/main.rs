@@ -34,7 +34,7 @@ fn main() {
     let dashword = match get_dashword(len, digits, simple){
         Some(w) => w,
         None => {
-            eprintln!("unable to generate {} words of length {}", wordtype, len);
+            eprintln!("unable to generate {} words of length {} with {} digits", wordtype, len, digits);
             std::process::exit(1);
         }
     };
@@ -48,18 +48,24 @@ fn main() {
 
 fn get_dashword(len:usize, digits:usize, simple:bool) -> Option<String> {
     
-    if len <2 || len > 15 {
+    if len <2 || len > 15 || digits < 1 || digits > 10 {
         return None;
     }
 
-    let mut number = get_number(digits);
+    let mut number:String = match get_number(digits) {
+        Some(n) => n,
+        None => {
+            return None;
+        }
+    };
+
     let banned_numbers = vec![
         "14", "18", "23", "88", "69", "111", "311", "666", "1352", "1390", "1488",
     ];
 
     // make sure number is not one of the banned ones
     while banned_numbers.contains(&number.as_str()) {
-        number = get_number(digits);
+        number = get_number(digits).unwrap();
     }
 
     let word:String;
@@ -83,7 +89,9 @@ fn get_dashword(len:usize, digits:usize, simple:bool) -> Option<String> {
 
 
 
-fn get_number(digits:usize) -> String {
+fn get_number(digits:usize) -> Option<String> {
+
+    if digits < 1 || digits > 10 { return None; } 
 
     let mut rng = rand::thread_rng();
     let mut number = String::from("");
@@ -93,7 +101,7 @@ fn get_number(digits:usize) -> String {
        number.push_str(&r.to_string());
     }
 
-    return number;
+    return Some(number);
 }
 
 
@@ -162,3 +170,5 @@ fn get_curated_word(len:usize) -> Option<String> {
     return Some(tmp[n].to_string());
 }
 
+#[cfg(test)]
+mod tests;
