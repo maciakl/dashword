@@ -128,6 +128,8 @@ fn get_curated_word(len:usize) -> Option<String> {
         // numbers
         "one", "two", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "zero",
         "first", "second", "third", "fifth", "seventh", "ninth", "eleventh", "double", "triple", "half",
+        // colors
+        "red", "white", "blue", "green", "yellow", "orange", "purple", "black", "gray", "cyan", "magenta",
         // directions
         "down", "left", "right", "center", "middle", "north", "south", "east", "west", "front", "back", 
         "forward", "above", "below", "top", "bottom", "beneath", "center",
