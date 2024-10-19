@@ -16,7 +16,7 @@ Simply run it on the command line:
     Options:
     -l, --length <LENGTH>  Length of the word [default: 5]
     -d, --digits <DIGITS>  Number of digits after the dash [default: 2]
-     -s, --simple           Use a word from a curated list of simple, memorable words
+    -s, --simple           Use a word from a curated list
     -h, --help             Print help
     -V, --version          Print version
 
