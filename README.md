@@ -21,3 +21,20 @@ Simply run it on the command line:
     -V, --version          Print version
 
 By default this tool will generate an 8 character *dashword* composed of a 5 character word, followed by a dash and 2 digit number.
+
+ ### Installation
+
+ Install via `cargo`:
+
+     cargo install https://github.com/maciakl/dashword/ 
+ 
+ On Windows, this tool is also distributed via `scoop` (see [scoop.sh](https://scoop.sh)).
+
+ First, you need to add my bucket:
+
+    scoop bucket add maciak https://github.com/maciakl/bucket
+    scoop update
+
+ Next simply run:
+ 
+    scoop install dashword
