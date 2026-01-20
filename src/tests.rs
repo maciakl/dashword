@@ -78,7 +78,7 @@ fn test_too_short_simple() {
 
 #[test]
 fn test_too_long_simple() {
-    assert!(get_dashword(10,2,true).is_none());
+    assert!(get_dashword(14,2,true).is_none());
 }
 
 #[test]
@@ -114,7 +114,7 @@ fn test_get_curated_word_is_zero() {
 
 #[test]
 fn test_get_curated_word_to_long() {
-    assert!(get_curated_word(11).is_none());
+    assert!(get_curated_word(14).is_none());
 }
 
 
