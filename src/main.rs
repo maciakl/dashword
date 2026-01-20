@@ -9,11 +9,11 @@ use rand::Rng;
 #[command(author, version, about, long_about = None)]
 struct Args {
     /// Length of the word
-    #[arg(short, long, default_value_t = 5)]
+    #[arg(short, long, default_value_t = 12)]
     length: usize,
 
     /// Number of digits after the dash
-    #[arg(short, long, default_value_t = 2)]
+    #[arg(short, long, default_value_t = 3)]
     digits: usize,
 
     /// Use a word from a curated list of simple, memorable words instead of full dictionary.
@@ -82,6 +82,11 @@ fn get_dashword(len:usize, digits:usize, simple:bool) -> Option<String> {
         word = random_word::gen_len(len, random_word::Lang::En).unwrap().to_string();
     }
 
+    // capitalize the word
+    let first_char = word.chars().next().unwrap().to_uppercase().to_string();
+    let rest_chars = &word[1..];
+    let word = format!("{}{}", first_char, rest_chars);
+
     Some(format!("{}-{}", word, number))
 }
 
@@ -111,7 +116,7 @@ fn get_number(digits:usize) -> Option<String> {
 
 fn get_curated_word(len:usize) -> Option<String> {
 
-    if len < 2 || len > 9 {
+    if len < 2 || len > 13 {
         return None;
     }
     let words = vec![
@@ -162,7 +167,36 @@ fn get_curated_word(len:usize) -> Option<String> {
         "discount", "entrance", "distance", "district", "external", "document", "exchange", "excel", 
         "exciting", "history", "instance", "indirect", "keyboard", "interval", "maximize", "minimize",
         "positive", "negative", "official", "research", "security", "ultimate", "terminal", "variable",
-        "vertical", "wireless",
+        "vertical", "wireless", "abbreviation", "application", "association", "communication",
+        "friendship", "improvement", "installation", "maintenance", "negotiation", "notification", 
+        "earthquake", "earthbound", "easiness", "dashboards", "calculates", " calculable", "complexity", 
+        "factorials", "fairground", "generosity", "icebreaker", "iconoclasm", "idealistic", "jeopardize",
+        "naturalize", "nationally", "objectives", "obliterate", "observable", "observance", "radiograph",
+        "adaptability", "agriculture", "architecture", "authorization", "certification", "collaboration",
+        "complementary", "comprehensive", "configuration", "conservation", "consideration", "consultation",
+        "contribution", "coordination", "development", "distribution", "entertainment", "establishment",
+        "exaggeration", "implementation", "independence", "interpretation", "modification", "organization",
+        "personification", "representation", "simplification", "specification", "transformation", "unification",
+        "accessibility", "accountability", "administration", "determination", "environment", "establishment",
+        "participation", "percentage", "possibility", "presentation", "publication", "recommendation",
+        "registration", "relationship", "replacement", "subscription", "temperature", "translation",
+        "university", "volunteering", "adaptation", "advertising", "alternatives", "appreciation",
+        "collaboration", "consideration", "construction", "contribution", "coordination", "distribution",
+        "entertainment", "establishment", "exaggeration", "implementation", "imagination", "independence",
+        "interpretation", "modification", "organization", "personification", "representation", "simplification",
+        "specification", "transformation", "unification", "accessibility", "accountability", "administration",
+        "determination", "environment", "establishment", "examination", "implementation", "introduction",
+        "organization", "presentation", "professional", "relationship", "understanding", "visualization", 
+        "facilitation", "international", "mathematics", "programming", "responsibility", "transportation",
+        "calligrapher", "constitution", "contribution", "conversation", "development", "entertainment",
+        "imagination", "independence", "interpretation", "modification", "personification", "representation",
+        "simplification", "specification", "transformation", "unification", "eccentricity", "extraordinary",
+        "individuality", "incompatibility", "inconsiderate", "infrastructure", "intellectuality", "misunderstanding",
+        "photosynthesis", "psychological", "reconstruction", "simultaneously", "thermodynamics", "rehabilitation",
+        "uncharacteristic", "uncontrollably", "unquestionably", "vulnerability", "accimmodation", "acknowledgement",
+        "administration", "appropriation", "authentication", "biotechnological", "conceptualization", "disenfranchisement",
+        "electromagnetic", "entrepreneurship", "environmentally", "institutionalization", "internationally",
+        "misinterpretation", "neurophysiological",
     ];
 
     let tmp:Vec<_>= words.iter().filter(|w| w.len()==len).collect();
