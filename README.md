@@ -44,9 +44,19 @@ If needed you can override the lenght of the word and the number as needed (capp
 
  ### Installation
 
+ #### Platform Intependent
+
  Install via `cargo`:
 
      cargo install https://github.com/maciakl/dashword/ 
+
+#### Linux and macOS
+
+You can install via [grab](https://github.com/maciakl/grab):
+
+    grab maciakl/dashword
+
+#### Windows
  
  On Windows, this tool is also distributed via `scoop` (see [scoop.sh](https://scoop.sh)).
 
