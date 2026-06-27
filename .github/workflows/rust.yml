@@ -3,10 +3,10 @@ name: Release
 on:
   push:
     tags:
-      - 'v*' # Triggers the workflow only when you push a version tag like v1.0.0
+      - 'v*'
 
 permissions:
-  contents: write # Crucial permission allowing the runner to upload assets to the release
+  contents: write
 
 jobs:
   publish:
@@ -16,20 +16,20 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            target: dashword_x86_64-unknown-linux-gnu
+            target: x86_64-unknown-linux-gnu
           - os: windows-latest
-            target: dashword_x86_64-pc-windows-msvc
+            target: x86_64-pc-windows-msvc
           - os: macos-latest
-            target: dashword_x86_64-apple-darwin
+            target: x86_64-apple-darwin
           - os: macos-latest
-            target: aarch64-apple-darwin # Apple Silicon (M1/M2/M3)
+            target: aarch64-apple-darwin
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install Rust toolchain
-        uses: dtlnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.target }}
 
