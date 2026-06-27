@@ -18,22 +18,22 @@ jobs:
         include:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            artifact_name: my-app-linux
+            artifact_name: dashword
             binary_path: target/x86_64-unknown-linux-gnu/release/dashword
             
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            artifact_name: my-app-windows
+            artifact_name: dashword
             binary_path: target/x86_64-pc-windows-msvc/release/dashword.exe
             
           - os: macos-latest
             target: x86_64-apple-darwin
-            artifact_name: my-app-mac-intel
+            artifact_name: dashword
             binary_path: target/x86_64-apple-darwin/release/dashword
 
           - os: macos-latest
             target: aarch64-apple-darwin
-            artifact_name: my-app-mac-apple-silicon
+            artifact_name: dashword
             binary_path: target/aarch64-apple-darwin/release/dashword
 
     steps:
