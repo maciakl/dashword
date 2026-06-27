@@ -39,7 +39,6 @@ jobs:
       - name: Build and Upload to Release
         uses: taiki-e/upload-rust-binary-action@v1
         with:
-          # Change 'my-rust-app' to the exact binary name specified in your Cargo.toml
-          bin: my-rust-app
+          bin: dashword
           target: ${{ matrix.target }}
           token: ${{ secrets.GITHUB_TOKEN }}
