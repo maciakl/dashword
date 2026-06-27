@@ -18,22 +18,22 @@ jobs:
         include:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            artifact_name: dashword
+            artifact_name: dashword-x86_64-unknown-linux-gnu
             binary_path: target/x86_64-unknown-linux-gnu/release/dashword
             
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            artifact_name: dashword
+            artifact_name: dashword-x86_64-pc-windows-msvc
             binary_path: target/x86_64-pc-windows-msvc/release/dashword.exe
             
           - os: macos-latest
             target: x86_64-apple-darwin
-            artifact_name: dashword
+            artifact_name: dashword-x86_64-apple-darwin
             binary_path: target/x86_64-apple-darwin/release/dashword
 
           - os: macos-latest
             target: aarch64-apple-darwin
-            artifact_name: dashword
+            artifact_name: dashword-aarch64-apple-darwin
             binary_path: target/aarch64-apple-darwin/release/dashword
 
     steps:
@@ -54,7 +54,7 @@ jobs:
       run: cargo build --release --target ${{ matrix.target }}
 
     - name: Upload compiled binary as artifact
-      uses: actions/artifacts@v4
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.artifact_name }}
         path: ${{ matrix.binary_path }}
