@@ -3,6 +3,8 @@ name: Build Rust Binaries
 on:
   release:
     types: [published]
+  
+  workflow_dispatch:
 
 
 jobs:
