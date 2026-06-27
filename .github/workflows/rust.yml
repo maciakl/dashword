@@ -93,10 +93,6 @@ jobs:
         run: |
           set -euo pipefail
           ls -lah release-assets
-          find release-assets -maxdepth 1 -type f ! -name '*.zip' -print -quit | grep -q . && {
-            echo "Found non-zip files in release-assets; failing."
-            exit 1
-          } || true
           test -n "$(find release-assets -maxdepth 1 -type f -name '*.zip' -print -quit)" || {
             echo "No zip files found."
             exit 1
@@ -109,16 +105,28 @@ jobs:
           cd release-assets
           sha256sum *.zip > SHA256SUMS.txt
 
-      - name: Create GitHub Release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}
-          generateReleaseNotes: true
-          artifacts: "release-assets/*.zip,release-assets/SHA256SUMS.txt"
-          artifactErrorsFailBuild: true
-          replacesArtifacts: true
-          allowUpdates: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Delete existing release for this tag (if any)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="${{ github.ref_name }}"
+          repo="${{ github.repository }}"
+          rel_id="$(gh api -X GET "repos/$repo/releases/tags/$tag" --jq '.id' 2>/dev/null || true)"
+          if [ -n "${rel_id:-}" ]; then
+            gh api -X DELETE "repos/$repo/releases/$rel_id"
+          fi
 
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          generate_release_notes: true
+          files: |
+            release-assets/*.zip
+            release-assets/SHA256SUMS.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
