@@ -19,19 +19,19 @@ jobs:
           # Windows
           - target: x86_64-pc-windows-msvc
             os: windows-latest
-            archive-name: dashword-windows-x86_64.zip
+            archive-name: dashword-Windows_x86_64.zip
           # Linux
           - target: x86_64-unknown-linux-gnu
             os: ubuntu-latest
-            archive-name: dashword-linux-x86_64.tar.gz
+            archive-name: dashword_Linux_x86_64.tar.gz
           # macOS Intel
           - target: x86_64-apple-darwin
             os: macos-latest
-            archive-name: dashword-apple-dawin-x86_65.tar.gz
+            archive-name: dashword_Apple_Dawin_x86_64.tar.gz
           # macOS Apple Silicon
           - target: aarch64-apple-darwin
             os: macos-latest
-            archive-name: dashword-apple-darwin-arch64.tar.gz
+            archive-name: dashword_Apple_Darwin_aarch64.tar.gz
 
     steps:
       - name: Checkout repository
