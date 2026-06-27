@@ -20,22 +20,26 @@ jobs:
         include:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            artifact_name: dashword-x86_64-unknown-linux-gnu
+            archive_name: dashword-x86_64-unknown-linux-gnu.zip
+            binary_name: dashword
             binary_path: target/x86_64-unknown-linux-gnu/release/dashword
 
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            artifact_name: dashword-x86_64-pc-windows-msvc
+            archive_name: dashword-x86_64-pc-windows-msvc.zip
+            binary_name: dashword.exe
             binary_path: target/x86_64-pc-windows-msvc/release/dashword.exe
 
           - os: macos-latest
             target: x86_64-apple-darwin
-            artifact_name: dashword-x86_64-apple-darwin
+            archive_name: dashword-x86_64-apple-darwin.zip
+            binary_name: dashword
             binary_path: target/x86_64-apple-darwin/release/dashword
 
           - os: macos-latest
             target: aarch64-apple-darwin
-            artifact_name: dashword-aarch64-apple-darwin
+            archive_name: dashword-aarch64-apple-darwin.zip
+            binary_name: dashword
             binary_path: target/aarch64-apple-darwin/release/dashword
 
     steps:
@@ -55,17 +59,18 @@ jobs:
       - name: Compile project in release mode
         run: cargo build --release --target ${{ matrix.target }}
 
-      - name: Prepare distributable artifact
+      - name: Package distributable zip
         shell: bash
         run: |
-          mkdir -p dist
-          cp "${{ matrix.binary_path }}" "dist/${{ matrix.artifact_name }}${{ endsWith(matrix.binary_path, '.exe') && '.exe' || '' }}"
+          mkdir -p dist package
+          cp "${{ matrix.binary_path }}" "package/${{ matrix.binary_name }}"
+          (cd package && zip -9 "../dist/${{ matrix.archive_name }}" "${{ matrix.binary_name }}")
 
-      - name: Upload compiled binary as artifact
+      - name: Upload zipped artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact_name }}
-          path: dist/${{ matrix.artifact_name }}${{ endsWith(matrix.binary_path, '.exe') && '.exe' || '' }}
+          name: ${{ matrix.target }}
+          path: dist/${{ matrix.archive_name }}
 
   release:
     name: Create GitHub Release and upload assets
@@ -83,7 +88,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p release-assets
-          find dist -type f -maxdepth 2 -print0 | while IFS= read -r -d '' file; do
+          find dist -type f -name '*.zip' -maxdepth 2 -print0 | while IFS= read -r -d '' file; do
             cp "$file" release-assets/"$(basename "$file")"
           done
 
