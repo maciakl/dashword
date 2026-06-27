@@ -87,5 +87,5 @@ jobs:
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2
         with:
-          files: artifacts/*
+          files: ${{ matrix.archive-name }}   
           generate_release_notes: true
