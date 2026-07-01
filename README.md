@@ -50,6 +50,17 @@ If needed you can override the lenght of the word and the number as needed (capp
 
      cargo install https://github.com/maciakl/dashword/ 
 
+#### macOS
+
+To install via `homebrew`, first add my tap and trust it:
+
+    brew tap maciakl/tap
+    brew trust maciakl/tap
+
+Then install:
+
+    brew install dashword
+
 #### Linux and macOS
 
 You can install via [grab](https://github.com/maciakl/grab):
